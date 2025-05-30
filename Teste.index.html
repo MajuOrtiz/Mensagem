@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mensagem de Amor</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff0f6;
+    color: #b0003a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  #texto {
+    font-size: 1.8em;
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+  }
+  .coracao {
+    color: red;
+    font-size: 1.5em;
+  }
+</style>
+</head>
+<body>
+
+<div id="texto"></div>
+
+<script>
+const frases = [
+  "Meu amor, você me dá sorte na VIDA... 🍀\n",
+  "E eu amo dividir a vida com você!\n",
+  "Eu te amo ❤️\n"
+];
+
+const textoEl = document.getElementById('texto');
+
+function escreverComCoracao(texto, delay=70) {
+  return new Promise(resolve => {
+    let i = 0;
+    textoEl.textContent = '';
+    function escrever() {
+      if(i < texto.length) {
+        textoEl.textContent += texto.charAt(i);
+        i++;
+        setTimeout(escrever, delay);
+      } else {
+        resolve();
+      }
+    }
+    escrever();
+  });
+}
+
+async function rodarAnimacao() {
+  for(let frase of frases) {
+    await escreverComCoracao(frase);
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  // Loop infinito da última frase "Eu te amo ❤️"
+  while(true) {
+    await escreverComCoracao("Eu te amo ❤️\n");
+    await new Promise(r => setTimeout(r, 2000));
+  }
+}
+
+rodarAnimacao();
+</script>
+
+</body>
+</html>
